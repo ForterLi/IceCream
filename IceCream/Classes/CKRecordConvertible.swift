@@ -117,11 +117,11 @@ extension CKRecordConvertible where Self: Object {
                     /// We may get List<Cat> here
                     /// The item cannot be casted as List<Object>
                     /// It can be casted at a low-level type `ListBase`
-                    guard let list = item as? ListBase, list.count > 0 else { break }
+                    guard let list = item as? List<Object>, list.count > 0 else { break }
                     var referenceArray = [CKRecord.Reference]()
-                    let wrappedArray = list._rlmArray
-                    for index in 0..<wrappedArray.count {
-                        guard let object = wrappedArray[index] as? Object, let primaryKey = object.objectSchema.primaryKeyProperty?.name else { continue }
+                    for index in 0..<list.count {
+                        let object = list[index]
+                        guard let primaryKey = object.objectSchema.primaryKeyProperty?.name else { continue }
                         switch object.objectSchema.primaryKeyProperty?.type {
                         case .string:
                             if let primaryValueString = object[primaryKey] as? String, let obj = object as? CKRecordConvertible, !obj.isDeleted {
