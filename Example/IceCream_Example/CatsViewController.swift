@@ -53,6 +53,7 @@ final class CatsViewController: UIViewController {
         /// https://realm.io/docs/swift/latest/#objects-with-primary-keys
         let cats = realm.objects(Cat.self)
         
+        
         Observable.array(from: cats).subscribe(onNext: { (cats) in
             /// When cats data changes in Realm, the following code will be executed
             /// It works like magic.
